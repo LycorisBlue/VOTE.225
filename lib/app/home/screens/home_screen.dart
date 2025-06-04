@@ -1,72 +1,31 @@
 import '/constants/app_export.dart';
+import '/shared_components/layout/bottom_navigation/bn_contolleur.dart';
+import '/shared_components/layout/bottom_navigation/bottom_navigation_bar.dart';
+import '/app/home/screens/tabs/home_tab.dart';
+import 'tabs/assistance_tab.dart';
+import 'tabs/candidates_tab.dart';
+import 'tabs/menu_tab.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MainScreen extends StatelessWidget {
+  MainScreen({super.key});
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  final BNavigationController navigationController = Get.find<BNavigationController>();
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final List<Widget> pages = [
+    HomeTab(), // Index 0 - Accueil
+    CandidatesTab(), // Index 1 - Candidats
+    AssistanceTab(), // Index 2 - Assistance
+    MenuTab(), // Index 3 - Menu (mis à jour)
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "home".tr,
-          style: TextStyle(color: AppColors.whiteColor),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Utils.changeLangue(Langue.en);
-            },
-            icon: const Icon(Icons.translate),
-          ),
-          IconButton(
-            onPressed: () {
-              MyNavigation.goToLogin();
-            },
-            icon: const Icon(Icons.login),
-          ),
-        ],
+    return MyAppScaffold(
+      backgroundColor: AppColors.whiteColor,
+      body: Obx(
+        () => pages[navigationController.tabIndex.value],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:'.tr,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.blackColor, fontSize: 18),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                '$_counter',
-                style: TextStyle(color: AppColors.accentColor, fontSize: 32),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }

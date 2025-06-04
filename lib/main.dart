@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return GetMaterialApp(
-            title: "App Template",
+            title: "225 Votes",
             debugShowCheckedModeBanner: false,
             //----------theme configuration------------
             theme: AppTheme.myLightTheme,
@@ -44,12 +44,9 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             //-----------------------------------------
-            //-------------
-            //
-            //
             //--getx routing--------------
             getPages: AppPages.routes,
-            initialRoute: MyRoutes.initial,
+            initialRoute: MyRoutes.home,
             navigatorObservers: const [],
             //-----------------------------------------
           );

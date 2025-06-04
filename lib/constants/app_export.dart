@@ -21,3 +21,5 @@ export '/shared_components/customs/custom_loader.dart';
 export '/shared_components/customs/custom_menu.dart';
 export '/shared_components/customs/custom_text_edit.dart';
 export '/shared_components/customs/custom_toast.dart';
+export '/shared_components/layout/page_body.dart';
+

@@ -2,34 +2,38 @@ import 'package:flutter/material.dart';
 import '/utils/helpers/app_extension.dart';
 
 class AppColors {
-// Basic colors
-  static const Color primaryColor = Colors.blue;
-  static final Color secondaryColor =
-      getComplementaryColor(primaryColor, index: 4);
-  static final Color accentColor =
-      getComplementaryColor(primaryColor, index: 3);
-  static final Color accentColor2 =
-      getComplementaryColor(primaryColor, index: 2);
+  // Couleurs principales basées sur le Figma (constantes)
+  static const Color primaryColor = Color(0xFF05A559); // Vert principal
+  static const Color secondaryColor = Color(0xFF17C014); // Vert secondaire
+  static const Color accentColor = Color(0xFFEC8035); // Orange accent
 
-  //orther colors
-  // Lightened variants of the primary color
+  // Couleurs de base
+  static const Color blackColor = Color(0xFF000000);
+  static const Color whiteColor = Color(0xFFFFFFFF);
+
+  // Nuances de gris du Figma
+  static const Color greyColor = Color(0xFF8E98A8); // Gris moyen
+  static const Color lightGreyColor = Color(0xFFF3F4F6); // Gris très clair
+  static const Color darkGreyColor = Color(0xFF6B7280); // Gris foncé
+  static const Color mediumGreyColor = Color(0xFF9CA3AF); // Gris moyen clair
+
+  // Couleurs spécifiques du Figma
+  static const Color greyBlue = Color(0xFFD3D7DF); // Gris bleuté
+
+  // Couleurs d'état et utilitaires
+  static const Color redColor = Color(0xFFEF4444); // Rouge pour erreurs
+  static const Color redLabelColors = Color(0xFFF16063);
+  static const Color warningColor = Color(0xFFF59E0B); // Jaune/orange warning
+
+  // Couleurs dérivées (non-constantes car calculées)
   static final Color primaryLight05 = lighten(primaryColor, 0.05);
-
-  // Darken variants of the primary color
   static final Color primaryColorDark05 = darken(primaryColor, 0.05);
 
-  //for custom colors
-  static final Color whiteColor = fromHex("#ffffff"); // Blanc
-  static final Color blackColor = fromHex("#000000"); // Noir
-  static final Color redColor = fromHex("#000000"); // Noir
-  static final Color redLabelColors = fromHex("#F16063");
-  static final Color warningColor = fromHex("#f2ad27");
-  static final Color lightGreyColor = fromHex("#f1f7ff");
-  static final Color greyColor = fromHex("#b2bac6");
+  // Couleurs utilisant fromHex pour compatibilité (non-constantes)
+  static final Color customGrey = fromHex("#9CA3AF");
 }
 
 Color darken(Color color, double amount) {
-  //amount is always between 0 and 1
   assert(amount >= 0 && amount <= 1, 'Amount should be between 0 and 1');
   int r = color.red;
   int g = color.green;
@@ -45,7 +49,6 @@ Color darken(Color color, double amount) {
 }
 
 Color lighten(Color color, double amount) {
-  //amount is always between 0 and 1
   assert(amount >= 0 && amount <= 1, 'Amount should be between 0 and 1');
 
   int r = color.red;
