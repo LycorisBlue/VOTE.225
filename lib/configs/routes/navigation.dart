@@ -30,4 +30,20 @@ class MyNavigation {
   static void goTo404Page() {
     Get.offAllNamed(MyRoutes.unknownRoute);
   }
+
+  static void goToCalendar() {
+    Get.toNamed(MyRoutes.calendar);
+  }
+
+  static void goToFAQ() {
+    Get.toNamed(MyRoutes.faq);
+  }
+
+  static void goToAbout() {
+    Get.toNamed(MyRoutes.about);
+  }
+
+  static void goToGlossary() {
+    Get.toNamed(MyRoutes.glossary);
+  }
 }

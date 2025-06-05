@@ -24,19 +24,23 @@ class CandidatesTab extends StatelessWidget {
               // Header
               _buildHeader(),
 
-              // Barre de recherche
-              _buildSearchBar(),
+              // Barre de recherche (masquée en cas d'erreur)
+              Obx(() => !controller.hasErrorState ? _buildSearchBar() : SizedBox()),
 
-              // Toggle de vue
-              ViewToggleWidget(),
+              // Toggle de vue (masqué en cas d'erreur)
+              Obx(() => !controller.hasErrorState ? ViewToggleWidget() : SizedBox()),
 
-              // Liste/Grille des candidats
+              // Contenu principal avec gestion des états
               Obx(() {
-                if (controller.isLoading.value) {
+                if (controller.isLoadingData) {
                   return _buildLoadingState();
                 }
 
-                if (controller.filteredCandidates.isEmpty) {
+                if (controller.hasErrorState) {
+                  return _buildErrorState();
+                }
+
+                if (!controller.hasData) {
                   return _buildEmptyState();
                 }
 
@@ -55,13 +59,50 @@ class CandidatesTab extends StatelessWidget {
   Widget _buildHeader() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Text(
-        'Candidats',
-        style: TextStyle(
-          fontSize: 24.sp,
-          fontWeight: FontWeight.bold,
-          color: AppColors.accentColor, // Orange comme sur la maquette
-        ),
+      child: Row(
+        children: [
+          Text(
+            'Candidats',
+            style: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.accentColor, // Orange comme sur la maquette
+            ),
+          ),
+          // Indicateur de statut réseau
+          Obx(() {
+            if (controller.hasErrorState) {
+              return Container(
+                margin: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.redColor.withOpacity(0.1),
+                  borderRadius: BorderRadiusStyle.roundedBorder8,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.wifi_off,
+                      size: 14,
+                      color: AppColors.redColor,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'Hors ligne',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return SizedBox();
+          }),
+        ],
       ),
     );
   }
@@ -136,10 +177,93 @@ class CandidatesTab extends StatelessWidget {
   Widget _buildLoadingState() {
     return Container(
       padding: EdgeInsets.all(32),
-      child: Center(
-        child: CircularProgressIndicator(
-          color: AppColors.primaryColor,
-        ),
+      child: Column(
+        children: [
+          CircularProgressIndicator(
+            color: AppColors.primaryColor,
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Chargement des candidats...',
+            style: TextStyle(
+              fontSize: 16.sp,
+              color: AppColors.greyColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Connexion au serveur en cours',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: AppColors.greyColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Container(
+      padding: EdgeInsets.all(32),
+      child: Column(
+        children: [
+          Icon(
+            Icons.cloud_off,
+            size: 64,
+            color: AppColors.redColor,
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Erreur de connexion',
+            style: TextStyle(
+              fontSize: 18.sp,
+              color: AppColors.blackColor,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Obx(() => Text(
+                controller.errorMessage.value,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.greyColor,
+                ),
+                textAlign: TextAlign.center,
+              )),
+          SizedBox(height: 24),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  text: 'Réessayer',
+                  onTap: () => controller.retryLoadCandidates(),
+                  variant: ButtonVariant.Primary,
+                  prefixWidget: Icon(
+                    Icons.refresh,
+                    color: AppColors.whiteColor,
+                    size: 18,
+                  ),
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: CustomButton(
+                  text: 'Mode hors ligne',
+                  onTap: () => controller.loadSampleData(),
+                  variant: ButtonVariant.Outline,
+                  prefixWidget: Icon(
+                    Icons.offline_bolt,
+                    color: AppColors.primaryColor,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -166,13 +290,20 @@ class CandidatesTab extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          SizedBox(height: 16),
           if (controller.searchQuery.value.isNotEmpty) ...[
-            SizedBox(height: 16),
             CustomButton(
               text: 'Effacer la recherche',
               onTap: () => controller.updateSearchQuery(''),
               variant: ButtonVariant.Outline,
               width: 160,
+            ),
+          ] else ...[
+            CustomButton(
+              text: 'Actualiser',
+              onTap: () => controller.refreshCandidates(),
+              variant: ButtonVariant.Primary,
+              width: 120,
             ),
           ],
         ],

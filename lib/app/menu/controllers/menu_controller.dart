@@ -1,17 +1,14 @@
 import 'package:get/get.dart';
 
+import '../../../configs/routes/navigation.dart';
+
 class MenusController extends GetxController {
   // Variable pour l'état de chargement
   final RxBool isLoading = false.obs;
 
   // Naviguer vers le calendrier électoral
   void goToCalendrierElectoral() {
-    Get.snackbar(
-      'Calendrier Électoral',
-      'Fonctionnalité à venir',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    MyNavigation.goToCalendar();
   }
 
   // Naviguer vers le processus électoral
@@ -26,22 +23,12 @@ class MenusController extends GetxController {
 
   // Naviguer vers le glossaire électoral
   void goToGlossaireElectoral() {
-    Get.snackbar(
-      'Glossaire Électoral',
-      'Fonctionnalité à venir',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    MyNavigation.goToGlossary();
   }
 
   // Naviguer vers la FAQ citoyenne
   void goToFAQCitoyenne() {
-    Get.snackbar(
-      'FAQ Citoyenne',
-      'Fonctionnalité à venir',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    MyNavigation.goToFAQ();
   }
 
   // Naviguer vers les paramètres
@@ -56,12 +43,7 @@ class MenusController extends GetxController {
 
   // Naviguer vers à propos de l'application
   void goToAPropos() {
-    Get.snackbar(
-      'À propos de l\'application',
-      'Version v1.0.0 - 225 Votes',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 3),
-    );
+    MyNavigation.goToAbout();
   }
 
   // Méthode générique pour gérer les clics sur les éléments du menu

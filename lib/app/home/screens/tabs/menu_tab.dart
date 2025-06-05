@@ -50,7 +50,7 @@ class MenuTab extends StatelessWidget {
                     iconPath: AppIcon.iconParametres,
                     title: 'Paramètres',
                     onTap: () => controller.handleMenuItemTap('settings'),
-                    iconColor: AppColors.greyColor,
+                    iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconAboutApp,
