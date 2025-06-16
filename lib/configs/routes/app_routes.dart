@@ -13,6 +13,8 @@ import '/app/about/screens/about_screen.dart';
 import '/app/about/bindings/about_binding.dart';
 import '/app/glossary/screens/glossary_screen.dart';
 import '/app/glossary/bindings/glossary_binding.dart';
+import '/app/settings/screens/settings_screen.dart';
+import '/app/settings/bindings/settings_binding.dart';
 import '/configs/routes/page_name.dart';
 
 class AppPages {
@@ -66,6 +68,13 @@ class AppPages {
       page: () => GlossaryScreen(),
       title: PageTitle.glossary,
       binding: GlossaryBinding(),
+    ),
+
+    GetPage(
+      name: MyRoutes.settings,
+      page: () => SettingsScreen(),
+      title: PageTitle.settings,
+      binding: SettingsBinding(),
     ),
   ];
 }

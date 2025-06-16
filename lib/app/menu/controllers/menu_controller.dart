@@ -33,12 +33,7 @@ class MenusController extends GetxController {
 
   // Naviguer vers les paramètres
   void goToParametres() {
-    Get.snackbar(
-      'Paramètres',
-      'Fonctionnalité à venir',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    MyNavigation.goToSettings();
   }
 
   // Naviguer vers à propos de l'application

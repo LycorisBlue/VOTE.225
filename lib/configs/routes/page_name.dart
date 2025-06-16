@@ -10,6 +10,7 @@ class MyRoutes {
   static const faq = '/faq';
   static const about = '/about';
   static const glossary = '/glossary';
+  static const settings = '/settings';
 
   static const unknownRoute = "/unknownRoute";
 }
@@ -26,4 +27,5 @@ class PageTitle {
   static var faq = 'faq';
   static var about = 'about';
   static var glossary = 'glossary';
+  static var settings = 'settings';
 }

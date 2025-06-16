@@ -46,4 +46,8 @@ class MyNavigation {
   static void goToGlossary() {
     Get.toNamed(MyRoutes.glossary);
   }
+
+  static void goToSettings() {
+    Get.toNamed(MyRoutes.settings);
+  }
 }
