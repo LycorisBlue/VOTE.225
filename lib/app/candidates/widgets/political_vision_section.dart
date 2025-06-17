@@ -1,10 +1,10 @@
+import '/app/candidates/controllers/candidates_controller.dart';
 import '/constants/app_export.dart';
-import '/app/candidates/controllers/candidate_detail_controller.dart';
 
 class PoliticalVisionSection extends StatelessWidget {
   PoliticalVisionSection({super.key});
 
-  final CandidateDetailController controller = Get.find<CandidateDetailController>();
+  final controller = Get.find<CandidatesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +26,19 @@ class PoliticalVisionSection extends StatelessWidget {
           SizedBox(height: 12),
 
           // Tags de vision politique
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: controller.politicalVision.asMap().entries.map((entry) {
-              int index = entry.key;
-              String vision = entry.value;
+          // Wrap(
+          //   spacing: 8,
+          //   runSpacing: 8,
+          //   children: controller.politicalVision.asMap().entries.map((entry) {
+          //     int index = entry.key;
+          //     String vision = entry.value;
 
-              return _buildVisionTag(
-                text: vision,
-                isOrange: index % 2 == 0, // Alterne entre orange et vert
-              );
-            }).toList(),
-          ),
+          //     return _buildVisionTag(
+          //       text: vision,
+          //       isOrange: index % 2 == 0, // Alterne entre orange et vert
+          //     );
+          //   }).toList(),
+          // ),
         ],
       ),
     );

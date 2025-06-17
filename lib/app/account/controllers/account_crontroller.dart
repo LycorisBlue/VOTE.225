@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:templateproject/configs/injectiondepency/injection.dart';
-import 'package:templateproject/data/models/user.dart';
-import 'package:templateproject/data/repositories/auth_repository.dart';
+import '/configs/injectiondepency/injection.dart';
+import '/data/models/user.dart';
+import '/data/repositories/auth_repository.dart';
 import '/services/networks/apis/api_controller_operation.dart';
 
 enum LoginState { loginInitial, authenticated, disconnect }

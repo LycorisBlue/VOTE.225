@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-
-import '../../../configs/routes/navigation.dart';
+import 'package:templateproject/configs/routes/navigation.dart';
 
 class MenusController extends GetxController {
   // Variable pour l'état de chargement
@@ -41,6 +40,10 @@ class MenusController extends GetxController {
     MyNavigation.goToAbout();
   }
 
+  void goToLutteContreDesinformation() {
+    MyNavigation.goToDisinformation();
+  }
+
   // Méthode générique pour gérer les clics sur les éléments du menu
   void handleMenuItemTap(String menuType) {
     switch (menuType) {
@@ -55,6 +58,9 @@ class MenusController extends GetxController {
         break;
       case 'faq':
         goToFAQCitoyenne();
+        break;
+      case 'disinformation':
+        goToLutteContreDesinformation();
         break;
       case 'settings':
         goToParametres();

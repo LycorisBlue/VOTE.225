@@ -1,3 +1,5 @@
+import 'package:templateproject/services/networks/apis/api_controller_operation.dart';
+
 import '/constants/app_export.dart';
 import '/app/candidates/controllers/candidates_controller.dart';
 import '/app/candidates/widgets/candidate_grid_card.dart';
@@ -14,40 +16,33 @@ class CandidatesTab extends StatelessWidget {
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: () async {
-          controller.refreshCandidates();
+          // controller.refreshCandidates();
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               _buildHeader(),
 
-              // Barre de recherche (masquée en cas d'erreur)
-              Obx(() => !controller.hasErrorState ? _buildSearchBar() : SizedBox()),
+              _buildSearchBar(),
 
-              // Toggle de vue (masqué en cas d'erreur)
-              Obx(() => !controller.hasErrorState ? ViewToggleWidget() : SizedBox()),
+              ViewToggleWidget(),
 
-              // Contenu principal avec gestion des états
               Obx(() {
-                if (controller.isLoadingData) {
+                if (controller.apiStatus.value == ApiState.loading) {
                   return _buildLoadingState();
                 }
 
-                if (controller.hasErrorState) {
-                  return _buildErrorState();
-                }
-
-                if (!controller.hasData) {
+                if (!controller.filteredCandidates.isNotEmpty) {
                   return _buildEmptyState();
                 }
 
-                return controller.isGridView ? _buildGridView() : _buildListView();
+                return controller.isGridView
+                    ? _buildGridView()
+                    : _buildListView();
               }),
 
-              // Espacement pour la bottom navigation
               SizedBox(height: 100),
             ],
           ),
@@ -66,7 +61,7 @@ class CandidatesTab extends StatelessWidget {
             style: TextStyle(
               fontSize: 24.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.accentColor, // Orange comme sur la maquette
+              color: AppColors.accentColor,
             ),
           ),
           // Indicateur de statut réseau
@@ -133,7 +128,7 @@ class CandidatesTab extends StatelessWidget {
               color: AppColors.lightGreyColor,
               borderRadius: BorderRadiusStyle.roundedBorder12,
               border: Border.all(
-                color: AppColors.greyColor.withOpacity(0.3),
+                color: AppColors.greyColor.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -170,7 +165,9 @@ class CandidatesTab extends StatelessWidget {
 
   Widget _buildListView() {
     return Column(
-      children: controller.filteredCandidates.map((candidate) => CandidateListItem(candidate: candidate)).toList(),
+      children: controller.filteredCandidates
+          .map((candidate) => CandidateListItem(candidate: candidate))
+          .toList(),
     );
   }
 
@@ -239,7 +236,7 @@ class CandidatesTab extends StatelessWidget {
               Expanded(
                 child: CustomButton(
                   text: 'Réessayer',
-                  onTap: () => controller.retryLoadCandidates(),
+                  onTap: () {}, //=> controller.retryLoadCandidates(),
                   variant: ButtonVariant.Primary,
                   prefixWidget: Icon(
                     Icons.refresh,
@@ -252,7 +249,7 @@ class CandidatesTab extends StatelessWidget {
               Expanded(
                 child: CustomButton(
                   text: 'Mode hors ligne',
-                  onTap: () => controller.loadSampleData(),
+                  onTap: () {}, //=> controller.loadSampleData(),
                   variant: ButtonVariant.Outline,
                   prefixWidget: Icon(
                     Icons.offline_bolt,
@@ -301,7 +298,7 @@ class CandidatesTab extends StatelessWidget {
           ] else ...[
             CustomButton(
               text: 'Actualiser',
-              onTap: () => controller.refreshCandidates(),
+              onTap: () {}, //=> controller.refreshCandidates(),
               variant: ButtonVariant.Primary,
               width: 120,
             ),

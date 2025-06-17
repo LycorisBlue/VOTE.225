@@ -1,10 +1,10 @@
+import '/app/candidates/controllers/candidates_controller.dart';
 import '/constants/app_export.dart';
-import '/app/candidates/controllers/candidate_detail_controller.dart';
 
 class CandidateDetailBanner extends StatelessWidget {
   CandidateDetailBanner({super.key});
 
-  final CandidateDetailController controller = Get.find<CandidateDetailController>();
+  final controller = Get.find<CandidatesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class CandidateDetailBanner extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadiusStyle.roundedBorder6,
               child: CustomImageView(
-                imagePath: controller.candidateImage,
+                imagePath: "",
                 width: 72,
                 height: 92,
                 fit: BoxFit.cover,
@@ -62,7 +62,7 @@ class CandidateDetailBanner extends StatelessWidget {
             children: [
               // Nom du candidat
               Text(
-                controller.candidateName,
+                "nom du candidat",
                 style: TextStyle(
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class CandidateDetailBanner extends StatelessWidget {
 
               // Parti politique
               Text(
-                controller.candidateParty,
+                "",
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: AppColors.whiteColor.withOpacity(0.9),

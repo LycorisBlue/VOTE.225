@@ -1,4 +1,6 @@
 import 'package:get/route_manager.dart';
+import 'package:templateproject/data/models/disinformation.dart';
+import 'package:templateproject/data/models/events.dart';
 import '/configs/routes/page_name.dart';
 import '/data/models/candidate.dart';
 
@@ -14,6 +16,11 @@ class MyNavigation {
   static void goToCandidateDetail(Candidate candidate) {
     Get.toNamed(MyRoutes.candidateDetail, arguments: candidate);
   }
+
+   static void goToArticleDetail(Article article) {
+    Get.toNamed(MyRoutes.candidateDetail, arguments: article);
+  }
+
 
   static void goToAssistance() {
     Get.toNamed(MyRoutes.assistance);
@@ -49,5 +56,17 @@ class MyNavigation {
 
   static void goToSettings() {
     Get.toNamed(MyRoutes.settings);
+  }
+
+  static void goToDisinformation() {
+    Get.toNamed(MyRoutes.disinformation);
+  }
+
+  static void goToReportDetail(DisinformationReport report) {
+    Get.toNamed(MyRoutes.reportDetail, arguments: report);
+  }
+
+  static void goToTipDetail(String tipId) {
+    Get.toNamed(MyRoutes.tipDetail, arguments: tipId);
   }
 }

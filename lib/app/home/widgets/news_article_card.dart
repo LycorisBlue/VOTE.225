@@ -1,9 +1,10 @@
+import '/constants/assets_path.dart';
 import '../controllers/home_crontroller.dart';
 import '/constants/app_export.dart';
-import '/data/models/news_article.dart';
+import '../../../data/models/events.dart';
 
 class NewsArticleCard extends StatelessWidget {
-  final NewsArticle article;
+  final Article article;
 
   NewsArticleCard({
     super.key,
@@ -15,13 +16,12 @@ class NewsArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.navigateToArticleDetail(article),
+      onTap: () => MyNavigation.goToArticleDetail(article),
       child: Container(
         margin: EdgeInsets.only(bottom: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image de l'article
             Container(
               width: 85,
               height: 85,
@@ -29,7 +29,7 @@ class NewsArticleCard extends StatelessWidget {
                 borderRadius: BorderRadiusStyle.roundedBorder8,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 4,
                     offset: Offset(0, 2),
                   ),
@@ -37,8 +37,13 @@ class NewsArticleCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadiusStyle.roundedBorder8,
-                child: CustomImageView(
-                  imagePath: article.imagePath,
+                child:  article.images.isNotEmpty ? CustomImageView(
+                  url: article.images[0],
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ): CustomImageView(
+                  imagePath: AppImage.alassaneOuattaraBanner,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,
@@ -48,14 +53,12 @@ class NewsArticleCard extends StatelessWidget {
 
             SizedBox(width: 12),
 
-            // Contenu de l'article
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Titre de l'article
                   Text(
-                    article.title,
+                    article.titre,
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
@@ -69,7 +72,9 @@ class NewsArticleCard extends StatelessWidget {
                   SizedBox(height: 8),
 
                   Text(
-                    article.source,
+                    article.description ?? article.categorieEvenement!.titre,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: AppColors.greyColor,
@@ -77,11 +82,8 @@ class NewsArticleCard extends StatelessWidget {
                     ),
                   ),
 
-                  // Source et temps
                   Row(
                     children: [
-
-                      // Icône temps
                       Icon(
                         Icons.access_time,
                         size: 14,
@@ -90,9 +92,8 @@ class NewsArticleCard extends StatelessWidget {
 
                       SizedBox(width: 4),
 
-                      // Temps écoulé
                       Text(
-                        article.timeAgo,
+                        Utils.timeAgo(article.dateDebut!),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyColor,
@@ -105,7 +106,6 @@ class NewsArticleCard extends StatelessWidget {
               ),
             ),
 
-            // Flèche de navigation
             Icon(
               Icons.arrow_forward_ios,
               size: 16,

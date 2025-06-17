@@ -1,10 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import '/data/repositories/candidates_repository.dart';
+import '/data/repositories/home_repository.dart';
 import '/services/locals/local_storage_service.dart';
 import '/data/repositories/auth_repository.dart';
-import '/data/repositories/candidates_repository.dart';
 import '/constants/app_export.dart';
 import '/services/networks/apis/rest_api_service.dart';
-import '/services/networks/graphql/graphql_service.dart';
 
 final sl = GetIt.instance;
 
@@ -12,30 +12,28 @@ final sl = GetIt.instance;
 FirebaseMessaging firebasemessaging = FirebaseMessaging.instance;
 
 Future<void> init() async {
-  // ============== REPOSITORIES ==============
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(),
   );
 
-  // Nouveau repository GraphQL pour les candidats
-  sl.registerLazySingleton<CandidatesRepository>(
-    () => CandidatesRepositoryImpl(sl<GraphQLService>()),
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(),
   );
+
+  sl.registerLazySingleton<CandidatesRepository>(
+    () => CandidatesRepositoryImpl(),
+  );
+  
 
   //... add other more repository here ....
 
-  // ============== SERVICES ==============
-
-  // Service REST API existant
+  // Service REST ou GraphQL API existant
   sl.registerLazySingleton(() => RestApiServices());
 
-  // Nouveau service GraphQL
-  sl.registerLazySingleton(() => GraphQLService());
-
   // environnements set
-  sl.get<RestApiServices>().setEnvironment(EnvironmentType.local);
-
-  // ============== LOCAL STORAGE ==============
+  sl
+      .get<RestApiServices>()
+      .setEnvironment(EnvironmentType.dev); // pour dio normal
 
   // local storage (share preference) init
   sl.registerFactory<LocalStorageServices>(
@@ -44,14 +42,11 @@ Future<void> init() async {
 
   await sl<LocalStorageServices>().init();
 
-  // ============== LANGUAGE INIT ==============
-
   // language init
   if (sl<LocalStorageServices>().getUserSelectedLang != null) {
-    Utils.changeLangue(Utils.convertLagueToEnum(sl<LocalStorageServices>().getUserSelectedLang!));
+    Utils.changeLangue(Utils.convertLagueToEnum(
+        sl<LocalStorageServices>().getUserSelectedLang!));
   }
-
-  // ============== FIREBASE CONFIGURATION ==============
 
 /*
   //firebase configuration

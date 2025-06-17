@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configs/injectiondepency/injection.dart' as di;
 import '/configs/routes/app_routes.dart';
@@ -7,8 +8,13 @@ import '/constants/app_export.dart';
 import '/themes/app_theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  await Future.delayed(Duration(milliseconds: 500));
   runApp(const MyApp());
 }
 

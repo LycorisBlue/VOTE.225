@@ -103,4 +103,29 @@ class Utils {
       (e) => e.toString().split('.')[1] == value,
     );
   }
+
+
+    static String timeAgo(DateTime dateTime) {
+    final Duration diff = DateTime.now().difference(dateTime);
+
+    if (diff.inSeconds < 60) {
+      return '${diff.inSeconds} secondes';
+    } else if (diff.inMinutes < 60) {
+      return '${diff.inMinutes} minutes';
+    } else if (diff.inHours < 24) {
+      return '${diff.inHours} heure${diff.inHours > 1 ? 's' : ''}';
+    } else if (diff.inDays < 7) {
+      return '${diff.inDays} jour${diff.inDays > 1 ? 's' : ''}';
+    } else if (diff.inDays < 30) {
+      final int weeks = (diff.inDays / 7).floor();
+      return '$weeks semaine${weeks > 1 ? 's' : ''}';
+    } else if (diff.inDays < 365) {
+      final int months = (diff.inDays / 30).floor();
+      return '$months mois';
+    } else {
+      final int years = (diff.inDays / 365).floor();
+      return '$years an${years > 1 ? 's' : ''}';
+    }
+  }
+
 }

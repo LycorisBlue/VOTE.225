@@ -5,19 +5,20 @@ import '/services/networks/apis/api_base.dart';
 import '/services/networks/apis/rest_api_reponse.dart';
 import '/services/networks/apis/rest_api_service.dart';
 
-abstract class CandidatesRepository {
-  Future<Either<List<String>, ApiResponse>> getCandidates();
+abstract class HomeRepository {
+  Future<Either<List<String>, ApiResponse>> getHomeArticle();
 }
 
-class CandidatesRepositoryImpl extends ApiBase<UserAccount>
-    implements CandidatesRepository {
+class HomeRepositoryImpl extends ApiBase<UserAccount>
+    implements HomeRepository {
   @override
-  Future<Either<List<String>, ApiResponse>> getCandidates() async {
+  Future<Either<List<String>, ApiResponse>> getHomeArticle() async {
     return await makeRequestApi(
      RestApiServices().dio.post(
         'graphql/',
-       data: {'query': candidatesQuery},
+       data: {'query': eventsQuery},
       ),
     );
   }
 }
+

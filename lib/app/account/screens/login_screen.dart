@@ -2,16 +2,13 @@ import '/constants/app_export.dart';
 import '/app/account/controllers/account_crontroller.dart';
 import '/utils/helpers/validation_input.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatelessWidget {
+   LoginPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   final controller = Get.find<AccountController>();
+
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

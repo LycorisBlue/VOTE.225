@@ -1,3 +1,5 @@
+import 'package:templateproject/constants/assets_path.dart';
+
 import '/constants/app_export.dart';
 import '/data/models/candidate.dart';
 import '/app/candidates/controllers/candidates_controller.dart';
@@ -15,14 +17,14 @@ class CandidateGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.navigateToCandidateDetail(candidate),
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadiusStyle.roundedBorder12,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 8,
               offset: Offset(0, 2),
             ),
@@ -40,19 +42,26 @@ class CandidateGridCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: Offset(0, 2),
                     ),
                   ],
                 ),
                 child: ClipOval(
-                  child: CustomImageView(
-                    imagePath: candidate.imagePath,
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
+                  child: candidate.cover != null
+                      ? CustomImageView(
+                          url: candidate.cover,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        )
+                      : CustomImageView(
+                          imagePath: AppImage.alassaneOuattaraBanner,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
 
@@ -60,7 +69,7 @@ class CandidateGridCard extends StatelessWidget {
 
               // Nom du candidat
               Text(
-                candidate.fullName,
+                candidate.displayName,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -75,7 +84,7 @@ class CandidateGridCard extends StatelessWidget {
 
               // Parti politique
               Text(
-                candidate.party,
+                candidate.politicalParties.name,
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.greyColor,
@@ -88,26 +97,30 @@ class CandidateGridCard extends StatelessWidget {
 
               // Bouton "+"
               GestureDetector(
-                onTap: () => controller.toggleFavorite(candidate.id),
-                child: Obx(() {
-                  final updatedCandidate =
-                      controller.allCandidates.firstWhere((c) => c.id == candidate.id, orElse: () => candidate);
+                  onTap: () {}, //=> controller.toggleFavorite(candidate.id),
+                  child:
+                      // Obx(() {
+                      // final updatedCandidate =
+                      //     controller.allCandidates.firstWhere((c) => c.documentId == candidate.id, orElse: () => candidate);
 
-                  return Container(
+                      // return
+                      Container(
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: updatedCandidate.isFavorite ? AppColors.primaryColor : AppColors.primaryColor,
+                      //color: updatedCandidate.isFavorite ? AppColors.primaryColor : AppColors.primaryColor,
+                      color: AppColors.primaryColor,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      updatedCandidate.isFavorite ? Icons.check : Icons.add,
+                      // updatedCandidate.isFavorite ? Icons.check :
+                      Icons.add,
                       color: AppColors.whiteColor,
                       size: 18,
                     ),
-                  );
-                }),
-              ),
+                  )
+                  // ;}),
+                  ),
             ],
           ),
         ),

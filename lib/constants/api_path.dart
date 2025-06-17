@@ -1,6 +1,6 @@
 class ApiPath {
-  static const String baseUrlDev = "http://"; // Dev
-  static const String baseUrlProd = "http://"; // Prod
+  static const String baseUrlDev = "https://api-dev-dot-v225vote.wl.r.appspot.com/"; // Dev
+  static const String baseUrlProd = "https://api-dev-dot-v225vote.wl.r.appspot.com/"; // Prod
   static const String baseUrlLocal = "https://dummyjson.com/"; // local ou test
   static const String baseUrlImage = "http://"; // base image url
 

@@ -1,5 +1,5 @@
+import '/app/candidates/controllers/candidates_controller.dart';
 import '/constants/app_export.dart';
-import '/app/candidates/controllers/candidate_detail_controller.dart';
 import '/app/candidates/widgets/candidate_detail_banner.dart';
 import '/app/candidates/widgets/candidate_info_section.dart';
 import '/app/candidates/widgets/political_vision_section.dart';
@@ -8,7 +8,7 @@ import '/app/candidates/widgets/program_points_section.dart';
 class CandidateDetailScreen extends StatelessWidget {
   CandidateDetailScreen({super.key});
 
-  final CandidateDetailController controller = Get.find<CandidateDetailController>();
+  final controller = Get.find<CandidatesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,9 @@ class CandidateDetailScreen extends StatelessWidget {
       backgroundColor: AppColors.whiteColor,
       appBar: _buildAppBar(),
       body: Obx(() {
-        if (!controller.hasCandidate) {
-          return _buildErrorState();
-        }
+        // if (!controller.hasCandidate) {
+        //   return _buildErrorState();
+        // }
 
         return SingleChildScrollView(
           child: Column(
@@ -82,7 +82,7 @@ PreferredSizeWidget _buildAppBar() {
               color: AppColors.blackColor,
               size: 18,
             ),
-            onPressed: () => controller.goBack(),
+            onPressed: (){},// => controller.goBack(),
             padding: EdgeInsets.zero,
           ),
         ),
@@ -121,7 +121,7 @@ PreferredSizeWidget _buildAppBar() {
           SizedBox(height: 24),
           CustomButton(
             text: 'Retour',
-            onTap: () => controller.goBack(),
+            onTap: (){}, //=> controller.goBack(),
             variant: ButtonVariant.Primary,
             width: 120,
           ),

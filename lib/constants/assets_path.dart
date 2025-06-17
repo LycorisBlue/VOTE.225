@@ -28,6 +28,7 @@ class AppImage {
   static const inscriptionElectorale = "assets/images/inscription_electorale.png";
   static const debatPresidentiel = "assets/images/debat_presidentiel.png";
   static const verificationVote = "assets/images/verification_vote.png";
+  static const voteElectoralImage = "assets/images/details_signalement.png";
 
   static const profil = "assets/images/profil.png";
 }

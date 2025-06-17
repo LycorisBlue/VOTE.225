@@ -24,17 +24,9 @@ class CalendarScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 16),
-
-              // Grille du calendrier
               CalendarGrid(),
-
-              // Filtres des événements
               EventFilters(),
-
-              // Liste des événements
               EventsList(),
-
-              // Espacement final
               SizedBox(height: 32),
             ],
           ),

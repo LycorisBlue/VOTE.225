@@ -14,10 +14,7 @@ class MenuTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           _buildHeader(),
-
-          // Liste des éléments du menu
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -25,42 +22,51 @@ class MenuTab extends StatelessWidget {
                   MenuItemWidget(
                     iconPath: AppIcon.iconCalendarElectoral,
                     title: 'Calendrier Electoral',
-                    onTap: () => controller.handleMenuItemTap('calendar'),
+                    onTap: () => MyNavigation.goToCalendar(),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconProcessusElectoral,
                     title: 'Processus Electoral',
-                    onTap: () => controller.handleMenuItemTap('process'),
+                    onTap: () => Get.snackbar(
+                      'Processus Électoral',
+                      'Fonctionnalité à venir',
+                      snackPosition: SnackPosition.BOTTOM,
+                      duration: Duration(seconds: 2),
+                    ),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconGlossaireElectoral,
                     title: 'Glossaire Electoral',
-                    onTap: () => controller.handleMenuItemTap('glossary'),
+                    onTap: () => MyNavigation.goToGlossary(),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconFAQCitoyenne,
                     title: 'FAQ Citoyenne',
-                    onTap: () => controller.handleMenuItemTap('faq'),
+                    onTap: () => MyNavigation.goToFAQ(),
+                    iconColor: AppColors.primaryColor,
+                  ),
+                  MenuItemWidget(
+                    iconPath: AppIcon.iconParametres, // Utiliser une icône existante ou en créer une nouvelle
+                    title: 'Lutte contre la Désinformation',
+                    onTap: () => controller.handleMenuItemTap('disinformation'),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconParametres,
                     title: 'Paramètres',
-                    onTap: () => controller.handleMenuItemTap('settings'),
+                    onTap: () => MyNavigation.goToSettings(),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
                     iconPath: AppIcon.iconAboutApp,
                     title: 'À propos de l\'application',
                     subtitle: 'v1.0.0',
-                    onTap: () => controller.handleMenuItemTap('about'),
+                    onTap: () => MyNavigation.goToAbout(),
                     iconColor: AppColors.primaryColor,
                   ),
-
-                  // Espacement pour la bottom navigation
                   SizedBox(height: 100),
                 ],
               ),

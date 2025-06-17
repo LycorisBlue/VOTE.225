@@ -1,3 +1,4 @@
+import '/services/networks/apis/api_controller_operation.dart';
 import '../controllers/home_crontroller.dart';
 import '/constants/app_export.dart';
 import '/app/home/widgets/news_article_card.dart';
@@ -14,7 +15,6 @@ class NewsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Titre de la section
           Text(
             'Actualités Électorales',
             style: TextStyle(
@@ -26,18 +26,17 @@ class NewsSection extends StatelessWidget {
 
           SizedBox(height: 16),
 
-          // Liste des articles
           Obx(() {
-            if (controller.isLoading.value) {
+            if (controller.apiStatus.value == ApiState.loading) {
               return _buildLoadingState();
             }
 
-            if (controller.newsArticles.isEmpty) {
+            if (controller.events!.value.articles.isEmpty) {
               return _buildEmptyState();
             }
 
             return Column(
-              children: controller.newsArticles.map((article) => NewsArticleCard(article: article)).toList(),
+              children: controller.events!.value.articles.map((article) => NewsArticleCard(article: article)).toList(),
             );
           }),
         ],

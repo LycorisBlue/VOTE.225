@@ -21,20 +21,11 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header avec logo et sélecteur de langue
               HomeHeader(),
-
               SizedBox(height: 16),
-
-              // Bannière du candidat
               CandidateBanner(),
-
               SizedBox(height: 24),
-
-              // Section des actualités
               NewsSection(),
-
-              // Espacement pour la bottom navigation
               SizedBox(height: 100),
             ],
           ),
