@@ -15,6 +15,9 @@ class MyRoutes {
   static const disinformation = '/disinformation';
   static const reportDetail = '/report-detail';
   static const tipDetail = '/tip-detail';
+  static const electoralProcess = '/electoral-process';
+  static const electoralProcessDetail = '/electoral-process-detail';
+  static const carteElectoral = '/carte-electoral';
 
   static const unknownRoute = "/unknownRoute";
 }
@@ -36,4 +39,7 @@ class PageTitle {
   static var disinformation = 'disinformation';
   static var reportDetail = 'report-detail';
   static var tipDetail = 'tip-detail';
+  static var electoralProcess = 'electoral-process';
+  static var carteElectoral = 'carte-electoral';
+  static var electoralProcessDetail = 'electoral-process-detail';
 }

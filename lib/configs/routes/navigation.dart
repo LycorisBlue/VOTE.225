@@ -17,10 +17,9 @@ class MyNavigation {
     Get.toNamed(MyRoutes.candidateDetail, arguments: candidate);
   }
 
-   static void goToArticleDetail(Article article) {
+  static void goToArticleDetail(Article article) {
     Get.toNamed(MyRoutes.candidateDetail, arguments: article);
   }
-
 
   static void goToAssistance() {
     Get.toNamed(MyRoutes.assistance);
@@ -68,5 +67,17 @@ class MyNavigation {
 
   static void goToTipDetail(String tipId) {
     Get.toNamed(MyRoutes.tipDetail, arguments: tipId);
+  }
+
+  static void goToElectoralProcess() {
+    Get.toNamed(MyRoutes.electoralProcess);
+  }
+
+  static void goToElectoralProcessDetail() {
+    Get.toNamed(MyRoutes.electoralProcessDetail);
+  }
+
+  static void goToCarteElectoral() {
+    Get.toNamed(MyRoutes.carteElectoral);
   }
 }

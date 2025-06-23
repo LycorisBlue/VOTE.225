@@ -1,11 +1,10 @@
-import '/app/candidates/controllers/candidates_controller.dart';
+import '/data/models/candidate.dart';
 import '/constants/app_export.dart';
 
 class PoliticalVisionSection extends StatelessWidget {
-  PoliticalVisionSection({super.key});
+  const PoliticalVisionSection({super.key, required this.politicalVisions});
 
-  final controller = Get.find<CandidatesController>();
-
+  final List<PoliticalVision> politicalVisions;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +12,6 @@ class PoliticalVisionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Titre de la section
           Text(
             'Vision Politique',
             style: TextStyle(
@@ -22,23 +20,19 @@ class PoliticalVisionSection extends StatelessWidget {
               color: AppColors.blackColor,
             ),
           ),
-
           SizedBox(height: 12),
-
-          // Tags de vision politique
-          // Wrap(
-          //   spacing: 8,
-          //   runSpacing: 8,
-          //   children: controller.politicalVision.asMap().entries.map((entry) {
-          //     int index = entry.key;
-          //     String vision = entry.value;
-
-          //     return _buildVisionTag(
-          //       text: vision,
-          //       isOrange: index % 2 == 0, // Alterne entre orange et vert
-          //     );
-          //   }).toList(),
-          // ),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: politicalVisions.asMap().entries.map((entry) {
+              int index = entry.key;
+              String vision = entry.value.title;
+              return _buildVisionTag(
+                text: vision,
+                isOrange: index % 2 == 0, // Alterne entre orange et vert
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
@@ -55,7 +49,7 @@ class PoliticalVisionSection extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder8,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: Offset(0, 2),
           ),

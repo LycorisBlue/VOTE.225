@@ -12,12 +12,7 @@ class MenusController extends GetxController {
 
   // Naviguer vers le processus électoral
   void goToProcessusElectoral() {
-    Get.snackbar(
-      'Processus Électoral',
-      'Fonctionnalité à venir',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    MyNavigation.goToElectoralProcess();
   }
 
   // Naviguer vers le glossaire électoral

@@ -148,11 +148,6 @@ class CalendarController extends GetxController {
     changeFilter(EventType.scrutin);
   }
 
-  // Retourner à l'écran précédent
-  void goBack() {
-    Get.back();
-  }
-
   // Rafraîchir les données
   void refreshEvents() {
     loadEvents();

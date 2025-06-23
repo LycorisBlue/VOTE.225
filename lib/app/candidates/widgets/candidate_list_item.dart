@@ -16,7 +16,7 @@ class CandidateListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, //=> controller.navigateToCandidateDetail(candidate),
+      onTap: () => MyNavigation.goToCandidateDetail(candidate),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(

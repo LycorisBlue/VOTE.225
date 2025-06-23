@@ -64,7 +64,7 @@ class CalendarScreen extends StatelessWidget {
               color: AppColors.blackColor,
               size: 18,
             ),
-            onPressed: () => controller.goBack(),
+            onPressed: () => Get.back(),
             padding: EdgeInsets.zero,
           ),
         ),

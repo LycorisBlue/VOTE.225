@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:templateproject/app/electoral_process/screens/carte_screen.dart';
 import '/app/candidates/bindings/candidates_binding.dart';
 import '/app/home/screens/news_article_detail.dart';
 import '/app/calendar/bindings/calendar_binding.dart';
@@ -20,6 +21,9 @@ import '/app/disinformation/screens/disinformation_screen.dart';
 import '/app/disinformation/bindings/disinformation_binding.dart';
 import '/app/disinformation/screens/report_detail_screen.dart';
 import '/app/disinformation/screens/tip_detail_screen.dart';
+import '/app/electoral_process/screens/electoral_process_screen.dart';
+import '/app/electoral_process/screens/electoral_process_detail_screen.dart';
+import '/app/electoral_process/bindings/electoral_process_binding.dart';
 import '/configs/routes/page_name.dart';
 
 class AppPages {
@@ -33,6 +37,9 @@ class AppPages {
   static const about = MyRoutes.about;
   static const glossary = MyRoutes.glossary;
   static const settings = MyRoutes.settings;
+  static const electoralProcess = MyRoutes.electoralProcess;
+  static const electoralProcessDetail = MyRoutes.electoralProcessDetail;
+  static const carteElectoral = MyRoutes.carteElectoral;
 
   static const unknownRoute = MyRoutes.unknownRoute;
 
@@ -55,7 +62,6 @@ class AppPages {
       title: PageTitle.candidateDetail,
       binding: CandidatesBinding(),
     ),
-
     GetPage(
       name: articleDetail,
       page: () => ArticleDetailScreen(),
@@ -110,6 +116,27 @@ class AppPages {
       name: MyRoutes.tipDetail,
       page: () => TipDetailScreen(),
       title: PageTitle.tipDetail,
+    ),
+
+    GetPage(
+      name: electoralProcess,
+      page: () => ElectoralProcessScreen(),
+      title: PageTitle.electoralProcess,
+      binding: ElectoralProcessBinding(),
+    ),
+
+    GetPage(
+      name: electoralProcessDetail,
+      page: () => ElectoralProcessDetailScreen(),
+      title: PageTitle.electoralProcessDetail,
+      binding: ElectoralProcessBinding(),
+    ),
+
+    GetPage(
+      name: carteElectoral,
+      page: () => CarteElectoralScreen(),
+      title: PageTitle.carteElectoral,
+      binding: ElectoralProcessBinding(),
     ),
   ];
 }

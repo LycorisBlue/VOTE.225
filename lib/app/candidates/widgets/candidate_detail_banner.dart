@@ -1,17 +1,22 @@
-import '/app/candidates/controllers/candidates_controller.dart';
+import 'package:templateproject/constants/assets_path.dart';
+
 import '/constants/app_export.dart';
 
 class CandidateDetailBanner extends StatelessWidget {
-  CandidateDetailBanner({super.key});
+  const CandidateDetailBanner(
+      {super.key,
+      required this.nom,
+      required this.politicalPartiesNom,
+      this.imageUrl});
 
-  final controller = Get.find<CandidatesController>();
-
+  final String nom;
+  final String politicalPartiesNom;
+  final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        // Bannière verte
         Container(
           width: double.infinity,
           height: 120,
@@ -19,12 +24,10 @@ class CandidateDetailBanner extends StatelessWidget {
             color: AppColors.primaryColor,
           ),
         ),
-
-        // Photo du candidat qui dépasse
         Positioned(
           left: 16,
           top: 40,
-          bottom: -20, // Fait dépasser la photo vers le bas
+          bottom: -20,
           child: Container(
             width: 80,
             height: 100,
@@ -33,7 +36,7 @@ class CandidateDetailBanner extends StatelessWidget {
               borderRadius: BorderRadiusStyle.roundedBorder8,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: Offset(0, 2),
                 ),
@@ -42,8 +45,13 @@ class CandidateDetailBanner extends StatelessWidget {
             padding: EdgeInsets.all(4),
             child: ClipRRect(
               borderRadius: BorderRadiusStyle.roundedBorder6,
-              child: CustomImageView(
-                imagePath: "",
+              child: imageUrl != null ? CustomImageView(
+                url: imageUrl,
+                width: 72,
+                height: 92,
+                fit: BoxFit.cover,
+              ): CustomImageView(
+                imagePath: AppImage.alassaneOuattaraBanner,
                 width: 72,
                 height: 92,
                 fit: BoxFit.cover,
@@ -51,18 +59,15 @@ class CandidateDetailBanner extends StatelessWidget {
             ),
           ),
         ),
-
-        // Texte aligné avec le haut de l'image
         Positioned(
-          left: 120, // Après l'image + espacement
+          left: 120,
           right: 16,
-          top: 40, // Même niveau que le haut de l'image
+          top: 40,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Nom du candidat
               Text(
-                "nom du candidat",
+                nom,
                 style: TextStyle(
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
@@ -71,15 +76,12 @@ class CandidateDetailBanner extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-
               SizedBox(height: 4),
-
-              // Parti politique
               Text(
-                "",
+                politicalPartiesNom,
                 style: TextStyle(
                   fontSize: 16.sp,
-                  color: AppColors.whiteColor.withOpacity(0.9),
+                  color: AppColors.whiteColor.withValues(alpha: 0.9),
                   fontWeight: FontWeight.w500,
                 ),
               ),

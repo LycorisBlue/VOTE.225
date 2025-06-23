@@ -28,12 +28,7 @@ class MenuTab extends StatelessWidget {
                   MenuItemWidget(
                     iconPath: AppIcon.iconProcessusElectoral,
                     title: 'Processus Electoral',
-                    onTap: () => Get.snackbar(
-                      'Processus Électoral',
-                      'Fonctionnalité à venir',
-                      snackPosition: SnackPosition.BOTTOM,
-                      duration: Duration(seconds: 2),
-                    ),
+                    onTap: () => MyNavigation.goToElectoralProcess(),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(

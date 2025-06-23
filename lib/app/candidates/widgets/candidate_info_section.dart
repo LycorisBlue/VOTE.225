@@ -1,10 +1,16 @@
-import '/app/candidates/controllers/candidates_controller.dart';
 import '/constants/app_export.dart';
 
 class CandidateInfoSection extends StatelessWidget {
-  CandidateInfoSection({super.key});
-
-  final  controller = Get.find<CandidatesController>();
+  const CandidateInfoSection(
+      {super.key,
+      required this.age,
+      required this.experience,
+       this.ville,
+      required this.fonction});
+  final int age;
+  final String experience;
+  final String? ville;
+  final String fonction;
 
   @override
   Widget build(BuildContext context) {
@@ -12,20 +18,19 @@ class CandidateInfoSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(
         children: [
-          // Colonne gauche - Âge et Expérience
           Expanded(
             child: Column(
               children: [
                 _buildInfoCard(
                   icon: Icons.person,
-                  title: "äge",
-                  subtitle: "candidateStatus",
+                  title: "$age ans",
+                  subtitle: fonction,
                 ),
                 SizedBox(height: 12),
                 _buildInfoCard(
                   icon: Icons.history,
                   title: 'Expérience',
-                  subtitle: "candidateExperience",
+                  subtitle: experience,
                 ),
               ],
             ),
@@ -40,13 +45,13 @@ class CandidateInfoSection extends StatelessWidget {
                 _buildInfoCard(
                   icon: Icons.location_on,
                   title: "Ville", // Ville
-                  subtitle:  'District',
+                  subtitle: ville ?? "--",
                 ),
                 SizedBox(height: 12),
                 _buildInfoCard(
                   icon: Icons.work,
                   title: 'Fonction',
-                  subtitle: "candidateFunction",
+                  subtitle: fonction,
                 ),
               ],
             ),

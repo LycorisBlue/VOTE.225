@@ -1,3 +1,4 @@
+import '/data/models/candidate.dart';
 import '/app/candidates/controllers/candidates_controller.dart';
 import '/constants/app_export.dart';
 import '/app/candidates/widgets/candidate_detail_banner.dart';
@@ -9,46 +10,40 @@ class CandidateDetailScreen extends StatelessWidget {
   CandidateDetailScreen({super.key});
 
   final controller = Get.find<CandidatesController>();
+  final candidate = Get.arguments as Candidate;
 
   @override
   Widget build(BuildContext context) {
     return MyAppScaffold(
-      backgroundColor: AppColors.whiteColor,
-      appBar: _buildAppBar(),
-      body: Obx(() {
-        // if (!controller.hasCandidate) {
-        //   return _buildErrorState();
-        // }
-
-        return SingleChildScrollView(
+        backgroundColor: AppColors.whiteColor,
+        appBar: _buildAppBar(),
+        body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Bannière avec photo et nom
-              CandidateDetailBanner(),
+              CandidateDetailBanner(
+                nom: candidate.displayName,
+                politicalPartiesNom: candidate.politicalParties.name,
+
+              ),
               SizedBox(height: 16),
-
-              // Section informations personnelles
-              CandidateInfoSection(),
-
-              // Section vision politique
-              PoliticalVisionSection(),
-
+              CandidateInfoSection(
+                age: candidate.age,
+                experience: candidate.workExperience,
+                fonction: candidate.workTitle,
+                ville: candidate.city,
+              ),
+              PoliticalVisionSection(politicalVisions:  candidate.politicalVisions,),
               SizedBox(height: 16),
+              ProgramPointsSection( pointCles: candidate.planKeyPoints,),
 
-              // Section points du programme
-              ProgramPointsSection(),
-
-              // Espacement pour les actions en bas
               SizedBox(height: 100),
             ],
           ),
-        );
-      }),
-      );
+        ));
   }
 
-PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
       backgroundColor: AppColors.whiteColor,
       elevation: 0,
@@ -82,51 +77,11 @@ PreferredSizeWidget _buildAppBar() {
               color: AppColors.blackColor,
               size: 18,
             ),
-            onPressed: (){},// => controller.goBack(),
+            onPressed: () => Get.back(),
             padding: EdgeInsets.zero,
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildErrorState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: AppColors.greyColor,
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Candidat non trouvé',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.greyColor,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Les informations du candidat ne sont pas disponibles',
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: AppColors.greyColor,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 24),
-          CustomButton(
-            text: 'Retour',
-            onTap: (){}, //=> controller.goBack(),
-            variant: ButtonVariant.Primary,
-            width: 120,
-          ),
-        ],
-      ),
     );
   }
 }

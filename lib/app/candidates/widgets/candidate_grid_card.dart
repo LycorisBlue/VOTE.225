@@ -17,7 +17,7 @@ class CandidateGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => MyNavigation.goToCandidateDetail(candidate),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
@@ -34,7 +34,6 @@ class CandidateGridCard extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              // Photo du candidat
               Container(
                 width: 80,
                 height: 80,
@@ -67,7 +66,6 @@ class CandidateGridCard extends StatelessWidget {
 
               SizedBox(height: 12),
 
-              // Nom du candidat
               Text(
                 candidate.displayName,
                 style: TextStyle(
@@ -82,7 +80,6 @@ class CandidateGridCard extends StatelessWidget {
 
               SizedBox(height: 4),
 
-              // Parti politique
               Text(
                 candidate.politicalParties.name,
                 style: TextStyle(
@@ -95,7 +92,6 @@ class CandidateGridCard extends StatelessWidget {
 
               SizedBox(height: 12),
 
-              // Bouton "+"
               GestureDetector(
                   onTap: () {}, //=> controller.toggleFavorite(candidate.id),
                   child:

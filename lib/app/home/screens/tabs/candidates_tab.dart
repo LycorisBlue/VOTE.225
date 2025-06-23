@@ -71,7 +71,7 @@ class CandidatesTab extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8),
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.redColor.withOpacity(0.1),
+                  color: AppColors.redColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadiusStyle.roundedBorder8,
                 ),
                 child: Row(
@@ -195,70 +195,6 @@ class CandidatesTab extends StatelessWidget {
               fontSize: 14.sp,
               color: AppColors.greyColor,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildErrorState() {
-    return Container(
-      padding: EdgeInsets.all(32),
-      child: Column(
-        children: [
-          Icon(
-            Icons.cloud_off,
-            size: 64,
-            color: AppColors.redColor,
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Erreur de connexion',
-            style: TextStyle(
-              fontSize: 18.sp,
-              color: AppColors.blackColor,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 8),
-          Obx(() => Text(
-                controller.errorMessage.value,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: AppColors.greyColor,
-                ),
-                textAlign: TextAlign.center,
-              )),
-          SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  text: 'Réessayer',
-                  onTap: () {}, //=> controller.retryLoadCandidates(),
-                  variant: ButtonVariant.Primary,
-                  prefixWidget: Icon(
-                    Icons.refresh,
-                    color: AppColors.whiteColor,
-                    size: 18,
-                  ),
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: CustomButton(
-                  text: 'Mode hors ligne',
-                  onTap: () {}, //=> controller.loadSampleData(),
-                  variant: ButtonVariant.Outline,
-                  prefixWidget: Icon(
-                    Icons.offline_bolt,
-                    color: AppColors.primaryColor,
-                    size: 18,
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
