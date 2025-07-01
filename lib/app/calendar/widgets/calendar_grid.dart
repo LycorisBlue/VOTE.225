@@ -1,3 +1,4 @@
+import 'package:shimmer/shimmer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '/constants/app_export.dart';
 import '/app/calendar/controllers/calendar_controller.dart';
@@ -54,7 +55,7 @@ class CalendarGrid extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               selectedDecoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: AppColors.tertiaryColor,
                 shape: BoxShape.circle,
               ),
               // Style du jour actuel
@@ -86,7 +87,8 @@ class CalendarGrid extends StatelessWidget {
               rightChevronVisible: false,
               headerPadding: EdgeInsets.zero,
               headerMargin: EdgeInsets.zero,
-              titleTextStyle: TextStyle(fontSize: 0), // Caché car on utilise notre header
+              titleTextStyle:
+                  TextStyle(fontSize: 0), // Caché car on utilise notre header
             ),
             // Style des jours de la semaine
             daysOfWeekStyle: DaysOfWeekStyle(
@@ -109,7 +111,7 @@ class CalendarGrid extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: hasEvents ? AppColors.primaryColor : Colors.transparent,
+                    color: hasEvents ? AppColors.tertiaryColor : Colors.transparent,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -117,7 +119,7 @@ class CalendarGrid extends StatelessWidget {
                       '${day.day}',
                       style: TextStyle(
                         fontSize: 16.sp,
-                        color: hasEvents ? AppColors.whiteColor : AppColors.blackColor,
+                        color: hasEvents ? AppColors.primaryColor : AppColors.blackColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -141,6 +143,41 @@ class CalendarGrid extends StatelessWidget {
               },
             ),
           )),
+    );
+  }
+}
+
+class CalendarShimmerGrid extends StatelessWidget {
+  const CalendarShimmerGrid({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: 7 * 6,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 7,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+          ),
+          itemBuilder: (_, __) => Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

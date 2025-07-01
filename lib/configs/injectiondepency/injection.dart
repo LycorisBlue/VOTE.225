@@ -1,4 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import '/data/repositories/disinformation_repository.dart';
+import '/data/repositories/calendar_repository.dart';
 import '/data/repositories/candidates_repository.dart';
 import '/data/repositories/home_repository.dart';
 import '/services/locals/local_storage_service.dart';
@@ -23,7 +25,14 @@ Future<void> init() async {
   sl.registerLazySingleton<CandidatesRepository>(
     () => CandidatesRepositoryImpl(),
   );
-  
+
+  sl.registerLazySingleton<CalendarRepository>(
+    () => CalendarRepositoryImpl(),
+  );
+
+  sl.registerLazySingleton<DisinformationRepository>(
+    () => DisinformationRepositoryImpl(),
+  );
 
   //... add other more repository here ....
 

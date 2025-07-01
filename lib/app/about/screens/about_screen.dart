@@ -1,3 +1,5 @@
+import 'package:templateproject/constants/assets_path.dart';
+
 import '/constants/app_export.dart';
 import '/app/about/controllers/about_controller.dart';
 
@@ -9,40 +11,76 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyAppScaffold(
-      backgroundColor: AppColors.whiteColor,
-      appBar: _buildAppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 32),
-
-              // Section logo avec bulle
-              _buildLogoSection(),
-
-              SizedBox(height: 48),
-
-              // Description de l'application
-              _buildAppDescription(),
-
-              SizedBox(height: 24),
-
-              // Liste des fonctionnalités
-              _buildFeaturesList(),
-
-              SizedBox(height: 32),
-
-              // Section objectif
-              _buildObjectiveSection(),
-
-              SizedBox(height: 32),
-            ],
+        backgroundColor: AppColors.whiteColor,
+        appBar: _buildAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomImageView(imagePath: AppImage.logo225Votes, alignment: Alignment.center, width: 120,),
+                SizedBox(height: 30),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '225 Votes',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text:
+                            ' est une plateforme web et mobile d\'information électorale inspirée des CIVICTECH, conçue pour informer, sensibiliser et accompagner les citoyens ivoiriens dans le processus électoral de 2025.',
+                            style: TextStyle(height: 1.8),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 22),
+                Text(
+                  'Une initiative financée par le',
+                ),
+                SizedBox(height: 26),
+                CustomImageView(
+                  alignment: Alignment.center,
+                  imagePath: AppImage.logoNED,
+                )
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        )
+        // SingleChildScrollView(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(16),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         SizedBox(height: 32),
+
+        //         // Section logo avec bulle
+        //         _buildLogoSection(),
+
+        //         SizedBox(height: 48),
+
+        //         // Description de l'application
+        //         _buildAppDescription(),
+
+        //         SizedBox(height: 24),
+
+        //         // Liste des fonctionnalités
+        //         _buildFeaturesList(),
+
+        //         SizedBox(height: 32),
+
+        //         // Section objectif
+        //         _buildObjectiveSection(),
+
+        //         SizedBox(height: 32),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        );
   }
 
   PreferredSizeWidget _buildAppBar() {
@@ -72,9 +110,9 @@ class AboutScreen extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back,
             color: AppColors.blackColor,
-            size: 18,
+            size: 22,
           ),
-          onPressed: () => controller.goBack(),
+          onPressed: () => Get.back(),
           padding: EdgeInsets.zero,
         ),
       ),

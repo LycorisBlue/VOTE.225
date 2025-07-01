@@ -1,8 +1,9 @@
 import 'package:get/route_manager.dart';
-import 'package:templateproject/data/models/disinformation.dart';
-import 'package:templateproject/data/models/events.dart';
+import '/data/models/disinformation.dart';
+import '/data/models/events.dart';
 import '/configs/routes/page_name.dart';
 import '/data/models/candidate.dart';
+import '/data/models/project_comparison.dart';
 
 class MyNavigation {
   static void goToHome() {
@@ -18,7 +19,7 @@ class MyNavigation {
   }
 
   static void goToArticleDetail(Article article) {
-    Get.toNamed(MyRoutes.candidateDetail, arguments: article);
+    Get.toNamed(MyRoutes.articleDetail, arguments: article);
   }
 
   static void goToAssistance() {
@@ -79,5 +80,29 @@ class MyNavigation {
 
   static void goToCarteElectoral() {
     Get.toNamed(MyRoutes.carteElectoral);
+  }
+
+  static void goToCGU() {
+    Get.toNamed(MyRoutes.cgu);
+  }
+
+  static void goToPrivacy() {
+    Get.toNamed(MyRoutes.privacyPolicy);
+
+  }
+  static void goToCarteBureaux() {
+    Get.toNamed(MyRoutes.carteBureaux);
+  }
+
+  static void goToProjectComparison() {
+    Get.toNamed(MyRoutes.projectComparison);
+  }
+
+  static void goToComparisonResults(ProjectComparison comparison) {
+    Get.toNamed(MyRoutes.comparisonResults, arguments: comparison);
+  }
+
+  static void goToMentionLegale() {
+    Get.toNamed(MyRoutes.mentionLegale);
   }
 }

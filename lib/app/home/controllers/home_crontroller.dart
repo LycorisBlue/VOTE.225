@@ -37,14 +37,7 @@ class HomeController extends GetxController with ApiControllerOperationMixin {
     // isLoading.value = false;
   }
 
-  // Naviguer vers le détail d'un article
-  // void navigateToArticleDetail(Events article) {
-  //   Get.snackbar(
-  //     'Article',
-  //     'Navigation vers: ${article.nodes[0]}',
-  //     snackPosition: SnackPosition.BOTTOM,
-  //   );
-  // }
+
 
   // Rafraîchir les actualités
   void refreshNews() {
@@ -66,8 +59,8 @@ class HomeController extends GetxController with ApiControllerOperationMixin {
             if (kDebugMode) {
               print("========ca marche=======");
               print("data: $dataResponse");
-              events = eventsFromJson(json.encode(dataResponse["data"]["events_connection"])).obs;
             }
+            events = eventsFromJson(json.encode(dataResponse["data"]["events_connection"])).obs;
             break;
           case ApiState.failure:
             break;

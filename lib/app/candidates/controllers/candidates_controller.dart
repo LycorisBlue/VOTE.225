@@ -16,7 +16,7 @@ class CandidatesController extends GetxController
     with ApiControllerOperationMixin {
   final candidatesResponse = sl<CandidatesRepository>();
   Rx<CandidatesEvent> candidatesEvent = CandidatesEvent.initial.obs;
-   Rx<Candidates>? allCandidates;
+  Rx<Candidates>? allCandidates;
   final RxList<Candidate> filteredCandidates = <Candidate>[].obs;
   final RxString searchQuery = ''.obs;
   final Rx<ViewType> currentViewType = ViewType.grid.obs;
@@ -41,8 +41,6 @@ class CandidatesController extends GetxController
   void updateSearchQuery(String query) {
     searchQuery.value = query.toLowerCase();
   }
-
-
 
   // Getter pour savoir si on est en vue grille
   bool get isGridView => currentViewType.value == ViewType.grid;
@@ -74,9 +72,11 @@ class CandidatesController extends GetxController
             if (kDebugMode) {
               print("========ca marche=======");
               print("data candidates: $dataResponse");
-              allCandidates = candidatesFromJson(json.encode(dataResponse["data"]["candidates_connection"])).obs;
-              filteredCandidates.value = allCandidates!.value.candidates;
             }
+            allCandidates = candidatesFromJson(
+                    json.encode(dataResponse["data"]["candidates_connection"]))
+                .obs;
+            filteredCandidates.value = allCandidates!.value.candidates;
             break;
           case ApiState.failure:
             break;

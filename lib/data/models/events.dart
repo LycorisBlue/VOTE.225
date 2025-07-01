@@ -25,6 +25,8 @@ class Events {
       };
 }
 
+enum EventType { inscription, campagne, scrutin, validation }
+
 class Article {
   String documentId;
   String titre;
@@ -35,6 +37,7 @@ class Article {
   List<dynamic> images;
   List<dynamic> videos;
   Election election;
+  String? rangeTime;
 
   Article({
     required this.documentId,
@@ -46,6 +49,7 @@ class Article {
     required this.images,
     required this.videos,
     required this.election,
+    this.rangeTime,
   });
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
@@ -63,6 +67,7 @@ class Article {
         images: List<dynamic>.from(json["images"].map((x) => x)),
         videos: List<dynamic>.from(json["videos"].map((x) => x)),
         election: Election.fromJson(json["election"]),
+        rangeTime: "7h à 18h", //json["rangeTime"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,6 +83,40 @@ class Article {
         "videos": List<dynamic>.from(videos.map((x) => x)),
         "election": election.toJson(),
       };
+
+
+  String get typeIcon {
+    switch (categorieEvenement!.titre) {
+      case "Inscription":
+        return '📝';
+      case "Campagne":
+        return '📢';
+      case "Scrutin":
+        return '🗳️';
+      case "Validation":
+        return '✅';
+      default:
+        return '';
+    }
+  }
+
+   String get formattedDate {
+    final months = [
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre'
+    ];
+    return '${dateDebut!.day} ${months[dateDebut!.month - 1]} ${dateDebut!.year}';
+  }
 }
 
 class CategorieEvenement {
@@ -116,4 +155,3 @@ class Election {
         "year": year,
       };
 }
-

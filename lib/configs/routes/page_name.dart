@@ -18,6 +18,12 @@ class MyRoutes {
   static const electoralProcess = '/electoral-process';
   static const electoralProcessDetail = '/electoral-process-detail';
   static const carteElectoral = '/carte-electoral';
+  static const cgu = '/cgu';
+  static const privacyPolicy = '/privacy-policy';
+  static const carteBureaux = '/carte-bureaux';
+  static const projectComparison = '/project-comparison';
+  static const comparisonResults = '/comparison-results';
+  static const mentionLegale = '/mention-legale';
 
   static const unknownRoute = "/unknownRoute";
 }
@@ -42,4 +48,10 @@ class PageTitle {
   static var electoralProcess = 'electoral-process';
   static var carteElectoral = 'carte-electoral';
   static var electoralProcessDetail = 'electoral-process-detail';
+  static var cgu = 'cgu';
+  static var privacyPolicy = 'privacyPolicy';
+  static var carteBureaux = 'carte-bureaux';
+  static var projectComparison = 'project-comparison';
+  static var comparisonResults = 'comparison-results';
+  static var mentionLegale = 'mentionLegale';
 }

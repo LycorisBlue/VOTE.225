@@ -5,6 +5,7 @@ class AppColors {
   // Couleurs principales basées sur le Figma (constantes)
   static const Color primaryColor = Color(0xFF05A559); // Vert principal
   static const Color secondaryColor = Color(0xFF17C014); // Vert secondaire
+  static const Color tertiaryColor = Color(0xFFAEE9AD); // Noir tertiaire
   static const Color accentColor = Color(0xFFEC8035); // Orange accent
 
   // Couleurs de base

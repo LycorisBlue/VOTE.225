@@ -1,8 +1,20 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '/configs/injectiondepency/injection.dart';
+import '/data/models/events.dart';
+import '/data/repositories/calendar_repository.dart';
+import '/services/networks/apis/api_controller_operation.dart';
 import '/data/models/electoral_event.dart';
 
-class CalendarController extends GetxController {
+enum CalendarEvent { initial }
+
+class CalendarController extends GetxController
+    with ApiControllerOperationMixin {
+  Rx<CalendarEvent> calendarEvent = CalendarEvent.initial.obs;
+  final calendarResponse = sl<CalendarRepository>();
   // Variables réactives pour le calendrier
   final Rx<DateTime> focusedDay = DateTime.now().obs;
   final Rx<DateTime?> selectedDay = Rx<DateTime?>(null);
@@ -10,12 +22,12 @@ class CalendarController extends GetxController {
   final RxInt currentYear = DateTime.now().year.obs;
 
   // Variables pour les événements
-  final RxList<ElectoralEvent> allEvents = <ElectoralEvent>[].obs;
-  final RxList<ElectoralEvent> filteredEvents = <ElectoralEvent>[].obs;
-  final RxList<ElectoralEvent> selectedDayEvents = <ElectoralEvent>[].obs;
+  final RxList<Article> allEvents = <Article>[].obs;
+  final RxList<Article> filteredEvents = <Article>[].obs;
+  final RxList<Article> selectedDayEvents = <Article>[].obs;
 
   // Variables pour les filtres
-  final Rx<EventType?> selectedFilter = Rx<EventType?>(null);
+  final Rx<String?> selectedFilter = Rx<String?>(null);
   final RxString activeFilterName = 'Tous'.obs;
 
   // État de chargement
@@ -37,10 +49,12 @@ class CalendarController extends GetxController {
     'Décembre'
   ];
 
+  Rx<Events>? events;
+
   @override
   void onInit() {
     super.onInit();
-    loadEvents();
+    getListCalendars();
     updateCurrentMonth();
 
     // Écouter les changements de mois focalisé
@@ -48,23 +62,13 @@ class CalendarController extends GetxController {
 
     // Écouter les changements de filtre
     ever(selectedFilter, (_) => filterEvents());
-  }
-
-  // Charger les événements
-  void loadEvents() {
-    isLoading.value = true;
-
-    // Simuler un délai de chargement
-    Future.delayed(Duration(milliseconds: 500), () {
-      allEvents.value = ElectoralEvent.getSampleEvents();
-      filteredEvents.value = allEvents;
-      isLoading.value = false;
-    });
+    ever(apiStatus, fireState);
   }
 
   // Mettre à jour le mois courant affiché
   void updateCurrentMonth() {
-    currentMonth.value = '${monthNames[focusedDay.value.month - 1]} ${focusedDay.value.year}';
+    currentMonth.value =
+        '${monthNames[focusedDay.value.month - 1]} ${focusedDay.value.year}';
     currentYear.value = focusedDay.value.year;
   }
 
@@ -92,19 +96,19 @@ class CalendarController extends GetxController {
   // Obtenir les événements pour un jour donné
   void getEventsForDay(DateTime day) {
     selectedDayEvents.value = filteredEvents.where((event) {
-      return isSameDay(event.date, day);
+      return isSameDay(event.dateDebut, day);
     }).toList();
   }
 
   // Vérifier si un jour a des événements
   bool hasEventsOnDay(DateTime day) {
-    return filteredEvents.any((event) => isSameDay(event.date, day));
+    return filteredEvents.any((event) => isSameDay(event.dateDebut, day));
   }
 
   // Obtenir les événements pour un jour (pour le calendrier)
-  List<ElectoralEvent> getEventsForCalendar(DateTime day) {
+  List<Article> getEventsForCalendar(DateTime day) {
     return filteredEvents.where((event) {
-      return isSameDay(event.date, day);
+      return isSameDay(event.dateDebut, day);
     }).toList();
   }
 
@@ -115,9 +119,10 @@ class CalendarController extends GetxController {
       activeFilterName.value = 'Tous';
     } else {
       filteredEvents.value = allEvents.where((event) {
-        return event.type == selectedFilter.value;
+        return event.categorieEvenement!.titre ==
+            selectedFilter.value.toString().capitalizeFirst;
       }).toList();
-      activeFilterName.value = selectedFilter.value!.name;
+      activeFilterName.value = selectedFilter.value!;
     }
 
     // Mettre à jour les événements du jour sélectionné si nécessaire
@@ -127,7 +132,7 @@ class CalendarController extends GetxController {
   }
 
   // Changer le filtre
-  void changeFilter(EventType? type) {
+  void changeFilter(String? type) {
     selectedFilter.value = type;
   }
 
@@ -137,20 +142,20 @@ class CalendarController extends GetxController {
   }
 
   void showInscriptionEvents() {
-    changeFilter(EventType.inscription);
+    changeFilter("Inscription");
   }
 
   void showCampaignEvents() {
-    changeFilter(EventType.campagne);
+    changeFilter("Campagne");
   }
 
   void showScrutinEvents() {
-    changeFilter(EventType.scrutin);
+    changeFilter("Scrutin");
   }
 
   // Rafraîchir les données
   void refreshEvents() {
-    loadEvents();
+    // loadEvents();
   }
 
   // Aller au mois courant
@@ -178,4 +183,40 @@ class CalendarController extends GetxController {
   CalendarFormat get calendarFormat => CalendarFormat.month;
 
   StartingDayOfWeek get startingDayOfWeek => StartingDayOfWeek.monday;
+
+  void getListCalendars() {
+    requestBaseController(calendarResponse.getCalendars());
+  }
+
+  mapEventToState(CalendarEvent event, ApiState state) {
+    switch (event) {
+      case CalendarEvent.initial:
+        switch (state) {
+          case ApiState.loading:
+            break;
+
+          case ApiState.success:
+            if (kDebugMode) {
+              print("========ca marche=======");
+              print("data: $dataResponse");
+            }
+            events = eventsFromJson(
+                    json.encode(dataResponse["data"]["events_connection"]))
+                .obs;
+            allEvents.value = events!.value.articles;
+            filteredEvents.value = allEvents;
+            isLoading.value = false;
+            break;
+          case ApiState.failure:
+            break;
+        }
+        break;
+
+      default:
+    }
+  }
+
+  fireState(ApiState calendarApiState) {
+    mapEventToState(calendarEvent.value, calendarApiState);
+  }
 }

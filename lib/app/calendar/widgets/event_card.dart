@@ -1,8 +1,9 @@
+import '/data/models/events.dart';
 import '/constants/app_export.dart';
 import '/data/models/electoral_event.dart';
 
 class EventCard extends StatelessWidget {
-  final ElectoralEvent event;
+  final Article event;
 
   const EventCard({
     super.key,
@@ -50,7 +51,7 @@ class EventCard extends StatelessWidget {
               children: [
                 // Titre de l'événement
                 Text(
-                  event.title,
+                  event.titre,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class EventCard extends StatelessWidget {
 
                 // Description de l'événement
                 Text(
-                  event.description,
+                  event.description ?? "",
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: AppColors.blackColor,
@@ -85,7 +86,7 @@ class EventCard extends StatelessWidget {
                 ),
 
                 // Heure si disponible
-                if (event.timeRange != null) ...[
+                if (event.rangeTime != null) ...[
                   SizedBox(height: 8),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -94,7 +95,7 @@ class EventCard extends StatelessWidget {
                       borderRadius: BorderRadiusStyle.roundedBorder6,
                     ),
                     child: Text(
-                      event.timeRange!,
+                      event.rangeTime!,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: _getEventColor(),
@@ -112,15 +113,17 @@ class EventCard extends StatelessWidget {
   }
 
   Color _getEventColor() {
-    switch (event.type) {
-      case EventType.inscription:
+    switch (event.categorieEvenement!.titre) {
+      case"Inscription":
         return AppColors.primaryColor;
-      case EventType.campagne:
+      case"Campagne":
         return AppColors.accentColor;
-      case EventType.scrutin:
+      case"Scrutin":
         return AppColors.redColor;
-      case EventType.validation:
+      case"Validation":
         return AppColors.secondaryColor;
+      default:
+      return AppColors.primaryColor;
     }
   }
 }

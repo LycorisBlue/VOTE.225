@@ -1,7 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '/configs/injectiondepency/injection.dart';
+import '/data/repositories/disinformation_repository.dart';
+import '/services/networks/apis/api_controller_operation.dart';
 
-class DisinformationController extends GetxController {
+enum DisinformationEvent { initial, signalerInfo }
+
+class DisinformationController extends GetxController
+    with ApiControllerOperationMixin {
+  Rx<DisinformationEvent> disinformationEvent = DisinformationEvent.initial.obs;
+  final disinformationResponse = sl<DisinformationRepository>();
   // Variables réactives pour la navigation entre onglets
   final RxInt currentTabIndex = 0.obs;
   final List<String> tabTitles = ['Signaler', 'Signalements', 'Conseils'];
@@ -28,7 +37,8 @@ class DisinformationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Initialisation si nécessaire
+    getSignalement();
+    ever(apiStatus, fireState);
   }
 
   @override
@@ -51,7 +61,6 @@ class DisinformationController extends GetxController {
     }
   }
 
-  // Valider et soumettre le signalement
   void submitReport() async {
     if (!formKey.currentState!.validate()) {
       return;
@@ -62,40 +71,12 @@ class DisinformationController extends GetxController {
         'Erreur',
         'Veuillez sélectionner une catégorie',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.withOpacity(0.8),
+        backgroundColor: Colors.red.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
       return;
     }
-
-    isLoading.value = true;
-
-    try {
-      // Simuler l'envoi du signalement
-      await Future.delayed(Duration(seconds: 2));
-
-      // Afficher le message de succès
-      Get.snackbar(
-        'Succès',
-        'Votre signalement a été envoyé avec succès',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.8),
-        colorText: Colors.white,
-      );
-
-      // Réinitialiser le formulaire
-      _resetForm();
-    } catch (e) {
-      Get.snackbar(
-        'Erreur',
-        'Une erreur est survenue lors de l\'envoi du signalement',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.withOpacity(0.8),
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false;
-    }
+    signalezInformation();
   }
 
   // Réinitialiser le formulaire
@@ -138,4 +119,81 @@ class DisinformationController extends GetxController {
   bool get isSignalerTab => currentTabIndex.value == 0;
   bool get isSignalementsTab => currentTabIndex.value == 1;
   bool get isConseilsTab => currentTabIndex.value == 2;
+
+  void getSignalement() {
+    requestBaseController(disinformationResponse.getSignalement());
+  }
+
+  void signalezInformation() {
+    disinformationEvent.value = DisinformationEvent.signalerInfo;
+    requestBaseController(disinformationResponse.signalezInformation({
+      "description": descriptionController.text,
+      "source": sourceController.text,
+      "category": selectedCategory.value,
+    }));
+  }
+
+  mapEventToState(DisinformationEvent event, ApiState state) {
+    switch (event) {
+      case DisinformationEvent.initial:
+        switch (state) {
+          case ApiState.loading:
+            break;
+
+          case ApiState.success:
+            if (kDebugMode) {
+              print("========ca marche=======");
+              print("data: $dataResponse");
+            }
+            // events = eventsFromJson(
+            //         json.encode(dataResponse["data"]["events_connection"]))
+            //     .obs;
+
+            isLoading.value = false;
+            break;
+          case ApiState.failure:
+            break;
+        }
+        break;
+
+      case DisinformationEvent.signalerInfo:
+        switch (state) {
+          case ApiState.loading:
+            break;
+
+          case ApiState.success:
+            if (kDebugMode) {
+              print("========ca marche=======");
+              print("data: $dataResponse");
+            }
+
+            isLoading.value = false;
+            _resetForm();
+            Get.snackbar(
+              'Succès',
+              'Votre signalement a été envoyé avec succès',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green.withValues(alpha: 0.8),
+              colorText: Colors.white,
+            );
+            break;
+          case ApiState.failure:
+            Get.snackbar(
+              'Erreur',
+              'Une erreur est survenue lors de l\'envoi du signalement',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red.withValues(alpha: 0.8),
+              colorText: Colors.white,
+            );
+            break;
+        }
+        break;
+
+      default:
+    }
+  }
+
+  fireState(ApiState disinformationApiState) {
+    mapEventToState(disinformationEvent.value, disinformationApiState);
+  }
 }

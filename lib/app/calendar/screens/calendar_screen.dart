@@ -1,3 +1,5 @@
+import 'package:templateproject/services/networks/apis/api_controller_operation.dart';
+
 import '/constants/app_export.dart';
 import '/app/calendar/controllers/calendar_controller.dart';
 import '/app/calendar/widgets/calendar_grid.dart';
@@ -20,16 +22,31 @@ class CalendarScreen extends StatelessWidget {
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              CalendarGrid(),
-              EventFilters(),
-              EventsList(),
-              SizedBox(height: 32),
-            ],
-          ),
+          child: Obx(() {
+            if (controller.apiStatus.value == ApiState.loading) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16),
+                  CalendarShimmerGrid(),
+                  FiltersShimmer(),
+                  EventsShimmer(),
+                  SizedBox(height: 32),
+                ],
+              );
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16),
+                CalendarGrid(),
+                EventFilters(),
+                EventsList(),
+                SizedBox(height: 32),
+              ],
+            );
+          }),
         ),
       ),
     );
@@ -49,26 +66,25 @@ class CalendarScreen extends StatelessWidget {
         ),
       ),
       leading: Container(
-          margin: EdgeInsets.only(left: 16),
-          decoration: BoxDecoration(
-            color: AppColors.whiteColor,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: AppColors.blackColor,
-              width: 1,
-            ),
-          ),
-          child: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: AppColors.blackColor,
-              size: 18,
-            ),
-            onPressed: () => Get.back(),
-            padding: EdgeInsets.zero,
+        margin: EdgeInsets.only(left: 16),
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: AppColors.blackColor,
+            width: 1,
           ),
         ),
-      
+        child: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: AppColors.blackColor,
+            size: 18,
+          ),
+          onPressed: () => Get.back(),
+          padding: EdgeInsets.zero,
+        ),
+      ),
       centerTitle: true,
     );
   }

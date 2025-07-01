@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
-import 'package:templateproject/app/electoral_process/screens/carte_screen.dart';
+import '/app/electoral_process/screens/carte_screen.dart';
+import '/app/settings/screens/cgu.dart';
+import '/app/settings/screens/mention_legal.dart';
+import '/app/settings/screens/privacy.dart';
+import '/app/settings/screens/mention_legal.dart';
+import '/app/electoral_process/screens/carte_screen.dart';
+import '/app/settings/screens/cgu.dart';
+import '/app/settings/screens/privacy.dart';
 import '/app/candidates/bindings/candidates_binding.dart';
 import '/app/home/screens/news_article_detail.dart';
 import '/app/calendar/bindings/calendar_binding.dart';
@@ -24,6 +31,11 @@ import '/app/disinformation/screens/tip_detail_screen.dart';
 import '/app/electoral_process/screens/electoral_process_screen.dart';
 import '/app/electoral_process/screens/electoral_process_detail_screen.dart';
 import '/app/electoral_process/bindings/electoral_process_binding.dart';
+import '/app/carte_bureaux/screens/carte_bureaux_screen.dart';
+import '/app/carte_bureaux/bindings/carte_bureaux_binding.dart';
+import '/app/project_comparison/screens/project_comparison_screen.dart';
+import '/app/project_comparison/screens/comparison_results_screen.dart';
+import '/app/project_comparison/bindings/project_comparison_binding.dart';
 import '/configs/routes/page_name.dart';
 
 class AppPages {
@@ -40,6 +52,11 @@ class AppPages {
   static const electoralProcess = MyRoutes.electoralProcess;
   static const electoralProcessDetail = MyRoutes.electoralProcessDetail;
   static const carteElectoral = MyRoutes.carteElectoral;
+  static const privacyPolicy = MyRoutes.privacyPolicy;
+  static const cgu = MyRoutes.cgu;
+  static const projectComparison = MyRoutes.projectComparison;
+  static const comparisonResults = MyRoutes.comparisonResults;
+  static const mentionLegale = MyRoutes.mentionLegale;
 
   static const unknownRoute = MyRoutes.unknownRoute;
 
@@ -98,45 +115,75 @@ class AppPages {
       title: PageTitle.settings,
       binding: SettingsBinding(),
     ),
-
     GetPage(
       name: MyRoutes.disinformation,
       page: () => DisinformationScreen(),
       title: PageTitle.disinformation,
       binding: DisinformationBinding(),
     ),
-
     GetPage(
       name: MyRoutes.reportDetail,
       page: () => ReportDetailScreen(),
       title: PageTitle.reportDetail,
     ),
-
     GetPage(
       name: MyRoutes.tipDetail,
       page: () => TipDetailScreen(),
       title: PageTitle.tipDetail,
     ),
-
     GetPage(
       name: electoralProcess,
       page: () => ElectoralProcessScreen(),
       title: PageTitle.electoralProcess,
       binding: ElectoralProcessBinding(),
     ),
-
     GetPage(
       name: electoralProcessDetail,
       page: () => ElectoralProcessDetailScreen(),
       title: PageTitle.electoralProcessDetail,
       binding: ElectoralProcessBinding(),
     ),
-
     GetPage(
       name: carteElectoral,
       page: () => CarteElectoralScreen(),
       title: PageTitle.carteElectoral,
       binding: ElectoralProcessBinding(),
+    ),
+    GetPage(
+      name: cgu,
+      page: () => CGUScreen(),
+      title: PageTitle.cgu,
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: privacyPolicy,
+      page: () => PrivacyPolicyScreen(),
+      title: PageTitle.privacyPolicy,
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: MyRoutes.carteBureaux,
+      page: () => CarteBureauxScreen(),
+      title: PageTitle.carteBureaux,
+      binding: CarteBureauxBinding(),
+    ),
+    GetPage(
+      name: projectComparison,
+      page: () => ProjectComparisonScreen(),
+      title: PageTitle.projectComparison,
+      binding: ProjectComparisonBinding(),
+    ),
+    GetPage(
+      name: comparisonResults,
+      page: () => ComparisonResultsScreen(),
+      title: PageTitle.comparisonResults,
+      binding: ProjectComparisonBinding(),
+    ),
+    GetPage(
+      name: mentionLegale,
+      page: () => MentionLegalScreen(),
+      title: PageTitle.mentionLegale,
+      binding: SettingsBinding(),
     ),
   ];
 }

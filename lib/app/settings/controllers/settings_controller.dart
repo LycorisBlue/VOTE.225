@@ -115,9 +115,6 @@ class SettingsController extends GetxController {
     );
   }
 
-  void goToAboutPage() {
-    MyNavigation.goToAbout();
-  }
 
   // Retourner à l'écran précédent
   void goBack() {

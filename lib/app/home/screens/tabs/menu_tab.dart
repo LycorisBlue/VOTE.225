@@ -44,9 +44,21 @@ class MenuTab extends StatelessWidget {
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(
-                    iconPath: AppIcon.iconParametres, // Utiliser une icône existante ou en créer une nouvelle
+                    iconPath: AppIcon.iconAboutApp, // à revoi pour le coté icon (fulgence)
                     title: 'Lutte contre la Désinformation',
-                    onTap: () => controller.handleMenuItemTap('disinformation'),
+                    onTap: () => MyNavigation.goToDisinformation(),
+                    iconColor: AppColors.primaryColor,
+                  ),
+                  MenuItemWidget(
+                    iconPath: AppIcon.iconAboutApp, // à revoir pour le coté icon (fulgence)
+                    title: 'Carte des Bureaux de Vote',
+                    onTap: () => MyNavigation.goToCarteBureaux(),
+                    iconColor: AppColors.primaryColor,
+                  ),
+                  MenuItemWidget(
+                    iconPath: AppIcon.iconAboutApp, // Ou créer une nouvelle icône spécifique
+                    title: 'Projet de Société',
+                    onTap: () => MyNavigation.goToProjectComparison(),
                     iconColor: AppColors.primaryColor,
                   ),
                   MenuItemWidget(

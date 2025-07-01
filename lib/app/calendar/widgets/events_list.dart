@@ -1,3 +1,5 @@
+import 'package:shimmer/shimmer.dart';
+
 import '/constants/app_export.dart';
 import '/app/calendar/controllers/calendar_controller.dart';
 import '/app/calendar/widgets/event_card.dart';
@@ -104,6 +106,48 @@ class EventsList extends StatelessWidget {
             onTap: () => controller.refreshEvents(),
             variant: ButtonVariant.Outline,
             width: 120,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+class EventsShimmer extends StatelessWidget {
+  const EventsShimmer({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Événements',
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.blackColor,
+            ),
+          ),
+          SizedBox(height: 16),
+          Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Column(
+              children: List.generate(3, (_) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                );
+              }),
+            ),
           ),
         ],
       ),
